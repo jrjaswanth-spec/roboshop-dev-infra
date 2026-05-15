@@ -9,11 +9,11 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket       = "trfm-remote-dev-state86s"
-    key          = "roboshop-dev-bastion"
-    region       = "us-east-1"
+    bucket = "trfm-remote-dev-state86s"
+    key    = "roboshop-dev-backend-alb"
+    region = "us-east-1"
     use_lockfile = true
-    encrypt      = true
+    encrypt = true
   }
 }
 
