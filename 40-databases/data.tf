@@ -33,6 +33,6 @@ data "aws_ssm_parameter" "database_subnet_ids" {
 
 
 data "aws_ssm_parameter" "rabbitmq_sg_id" {
-  name = "/${var.project_name}/${var.environment}/rabbitmq_subnet_id"
+  name = "/${var.project_name}/${var.environment}/rabbitmq_sg_id"
 }
 
