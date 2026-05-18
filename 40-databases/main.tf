@@ -199,4 +199,5 @@ resource "aws_iam_instance_profile" "mysql" {
     type = "A"
     ttl = 1
     records = [each.value]
+    allow_overwrite = true
   }
