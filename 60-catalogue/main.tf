@@ -119,20 +119,15 @@ vpc_security_group_ids = [local.catalogue_sg_id]
     ) 
       }
   # tags atttached to the launch template
-    tag_specifications {
-    resource_type = "launch_template"
-
-    tags =merge(
-        local.common_tags,
+  tags =merge(
+  local.common_tags,
         {
             Name = "${local.common_name_suffix}-catalogue"
         }
+        
+     ) 
+       }
 
-    ) 
-      
-    
-  }
-}
 
 
 resource "aws_autoscaling_group" "bar" {
