@@ -23,3 +23,14 @@ variable "sg_names" {
      ,"backend_alb"
      ]  
 }
+
+variable "zone_id" {
+    default = "Z00835102KF6ZT3AHQVW7"
+    type = string
+  
+}
+
+variable "domain_name" {
+    default = "jrdaws.life"
+  
+}

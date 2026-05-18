@@ -191,7 +191,12 @@ resource "aws_iam_instance_profile" "mysql" {
   }
 
 
-
-
-
-
+  
+  resource "aws_route53_record" "databases" {
+    for_each = local.database_private_ips
+    zone_id = var.zone_id
+    name = "${each.key}-${var.environment}.${var.domain_name}"
+    type = "A"
+    ttl = 1
+    records = [each.value]
+  }
