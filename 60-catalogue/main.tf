@@ -88,17 +88,9 @@ resource "terraform_data" "catalogue" {
 resource "aws_launch_template" "catalogue" {
 name = "${local.common_name_suffix}-catalogue"
 image_id = aws_ami_from_instance.catalogue.id
-
 instance_initiated_shutdown_behavior = "terminate"
-
-
-  instance_type = "t3.micro"
-
-
-
- 
-
-  vpc_security_group_ids = ["local.catalogue.sg_id"]
+instance_type = "t3.micro"
+vpc_security_group_ids = [local.catalogue_sg_id]
 
 # tags attached to the instance
  tag_specifications {
@@ -155,7 +147,7 @@ resource "aws_autoscaling_group" "bar" {
     id = aws_launch_template.catalogue.id
     version = aws_launch_template.catalogue.latest_version
   }
-  vpc_zone_identifier       = local.private_subnet_id
+  vpc_zone_identifier       = [local.private_subnet_id]
   target_group_arns = [ aws_lb_target_group.catalogue.arn ]
 
   dynamic "tag" { # we will get iterator with name as tag
