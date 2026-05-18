@@ -119,11 +119,9 @@ vpc_security_group_ids = [local.catalogue_sg_id]
     ) 
       }
 
-       }
+}
 
-
-
-resource "aws_autoscaling_group" "bar" {
+resource "aws_autoscaling_group" "catalogue" {
   name                      = "${local.common_name_suffix}-catalogue"
   max_size                  = 10
   min_size                  = 1
