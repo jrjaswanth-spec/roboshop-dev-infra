@@ -8,7 +8,7 @@ resource "aws_instance" "catalogue" {
     tags = merge (
         local.common_tags,
         {
-            Name = "${local.common_name_suffix}-catalogue" # roboshop-dev-mongodb
+            Name = "${local.common_name_suffix}-catalogue" # roboshop-dev-catalogue
         }
     )
 }
@@ -55,7 +55,7 @@ resource "aws_ami_from_instance" "catalogue" {
   tags = merge (
         local.common_tags,
         {
-            Name = "${local.common_name_suffix}-catalogue-ami" # roboshop-dev-mongodb
+            Name = "${local.common_name_suffix}-catalogue-ami" # roboshop-dev-catalogue
         }
   )
 }
@@ -145,7 +145,6 @@ resource "aws_autoscaling_group" "catalogue" {
     preferences {
       min_healthy_percentage = 50 # atleast 50% of the instances should be up and running
     }
-    triggers = ["launch_template"]
   }
   
   dynamic "tag" {  # we will get the iterator with name as tag
