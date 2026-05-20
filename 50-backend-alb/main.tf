@@ -6,7 +6,7 @@ resource "aws_lb" "backend_alb" {
   # should be private
   subnets            = local.private_subnet_id
 
-  enable_deletion_protection = true # prevents accidental deletion from UI
+  enable_deletion_protection = false # prevents accidental deletion from UI
 
 
   
@@ -39,3 +39,15 @@ resource "aws_lb_listener" "front_end" {
   }
 }
 
+resource "aws_route53_record" "backend_alb" {
+  zone_id = var.zone_id
+  name    = "*.backend-alb-${var.environment}.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    # these are ALB details, not our domain details
+    name                   = aws_lb.backend_alb.dns_name
+    zone_id                = aws_lb.backend_alb.zone_id
+    evaluate_target_health = true
+  }
+}
