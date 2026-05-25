@@ -111,7 +111,7 @@ resource "aws_security_group_rule" "redis_user" {
 resource "aws_security_group_rule" "redis_cart" {
   type = "ingress"
   security_group_id = local.redis_sg_id
-  source_security_group_id = local.cart.user_sg_id
+  source_security_group_id = local.cart_sg_id
   from_port         = 6379
   protocol       = "tcp"
   to_port           = 6379
@@ -148,7 +148,7 @@ resource "aws_security_group_rule" "user_backend_alb" {
 
 resource "aws_security_group_rule" "cart_backend_alb" {
   type = "ingress"
-  security_group_id = local.cart.user_sg_id
+  security_group_id = local.cart_sg_id
   source_security_group_id = local.backend_alb_sg_id
   from_port = 8080
   protocol  = "tcp"
