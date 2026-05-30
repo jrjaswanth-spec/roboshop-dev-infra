@@ -10,7 +10,7 @@ growpart /dev/nvme0n1 4
 pvresize /dev/nvme0n1p4
 
 # Extend logical volume
-lvextend -l +100%FREE /dev/mapper/RootVG-homeVol
+lvextend -l +30G /dev/mapper/RootVG-homeVol
 
 # Grow XFS filesystem
 xfs_growfs /home
@@ -25,6 +25,7 @@ sudo yum install -y terraform
 
 cd /home/ec2-user
 git clone https://github.com/jrjaswanth-spec/roboshop-dev-infra.git
+chown ec2-user:ec2-user -R roboshop-dev-infra
 cd roboshop-dev-infra/40-databases
 terraform init
 terraform apply -auto-approve
