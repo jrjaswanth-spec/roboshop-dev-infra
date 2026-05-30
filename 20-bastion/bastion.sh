@@ -10,7 +10,7 @@ growpart /dev/nvme0n1 4
 pvresize /dev/nvme0n1p4
 
 # Extend logical volume
-lvextend -l +30G /dev/mapper/RootVG-homeVol
+lvextend -L +30G /dev/mapper/RootVG-homeVol
 
 # Grow XFS filesystem
 xfs_growfs /home
