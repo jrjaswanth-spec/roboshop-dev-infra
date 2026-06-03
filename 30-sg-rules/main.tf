@@ -86,7 +86,7 @@ resource "aws_security_group_rule" "rabbitmq_bastion" {
   to_port           = 22
 }
 
-resource "aws_security_group_rule""rabbitmq_payment" {
+resource "aws_security_group_rule" "rabbitmq_payment" {
   type = "ingress"
   security_group_id = local.rabbitmq_sg_id
   source_security_group_id = local.payment_sg_id
@@ -277,6 +277,44 @@ resource "aws_security_group_rule" "frontend_bastion" {
   protocol  = "tcp"
   to_port   = 22
 }
+
+### VPN RULE ###
+resource "aws_security_group_rule" "open_vpn_public" {
+  type = "ingress"
+  security_group_id = local.open_vpn_sg_id
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port = 22
+  protocol  = "tcp"
+  to_port   = 22
+}
+
+resource "aws_security_group_rule" "open_vpn_943" {
+  type              = "ingress"
+  security_group_id = local.open_vpn_sg_id
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port         = 943
+  protocol          = "tcp"
+  to_port           = 943
+}
+
+resource "aws_security_group_rule" "open_vpn_443" {
+  type              = "ingress"
+  security_group_id = local.open_vpn_sg_id
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port         = 443
+  protocol          = "tcp"
+  to_port           = 443
+}
+
+resource "aws_security_group_rule" "open_vpn_1194" {
+  type              = "ingress"
+  security_group_id = local.open_vpn_sg_id
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port         = 1194
+  protocol          = "tcp"
+  to_port           = 1194
+}
+
 
 # components in backend cant talk with each other, they have to connect first with backend ALB first
 
