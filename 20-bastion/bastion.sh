@@ -1,4 +1,6 @@
+
 #!/bin/bash
+set -e
 
 # Wait a little for disk to become available
 sleep 30
@@ -9,11 +11,11 @@ growpart /dev/nvme0n1 4
 # Resize physical volume
 pvresize /dev/nvme0n1p4
 
-# Extend logical volume
-lvextend -L +30G /dev/mapper/RootVG-homeVol
+# Extend logical volume using any available free space
+lvextend -l +100%FREE /dev/mapper/RootVG-homeVol || true
 
 # Grow XFS filesystem
-xfs_growfs /home
+xfs_growfs /home || true
 
 # Install Terraform
 sudo yum install -y yum-utils
