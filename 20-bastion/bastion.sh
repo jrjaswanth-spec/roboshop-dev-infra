@@ -1,4 +1,4 @@
-\#!/bin/bash
+#!/bin/bash
 
 # growing the /home volume for terraform purpose
 growpart /dev/nvme0n1 4
