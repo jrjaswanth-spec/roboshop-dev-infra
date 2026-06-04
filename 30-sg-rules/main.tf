@@ -315,6 +315,16 @@ resource "aws_security_group_rule" "open_vpn_1194" {
   to_port           = 1194
 }
 
+resource "aws_security_group_rule" "components_vpn" {
+  for_each = local.vpn_ingress_rules
+  type              = "ingress"
+  security_group_id = each.value.sg_id
+  source_security_group_id = local.open_vpn_sg_id
+  from_port         = each.value.port
+  protocol          = "tcp"
+  to_port           = each.value.port
+}
+
 
 # components in backend cant talk with each other, they have to connect first with backend ALB first
 
