@@ -1,4 +1,3 @@
-
 #!/bin/bash
 set -e
 
@@ -6,10 +5,10 @@ set -e
 sleep 30
 
 # Expand partition only if free space exists
-growpart /dev/nvme0n1 4
+growpart /dev/nvme0n1 4 || true
 
 # Resize physical volume
-pvresize /dev/nvme0n1p4
+pvresize /dev/nvme0n1p4 || true
 
 # Extend logical volume using any available free space
 lvextend -l +100%FREE /dev/mapper/RootVG-homeVol || true
@@ -20,14 +19,16 @@ xfs_growfs /home || true
 # Install Terraform
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-sudo yum install -y terraform
+sudo yum install -y terraform || true
 
 
 # creating databases
 
 cd /home/ec2-user
+rm -rf roboshop-dev-infra
 git clone https://github.com/jrjaswanth-spec/roboshop-dev-infra.git
 chown ec2-user:ec2-user -R roboshop-dev-infra
 cd roboshop-dev-infra/40-databases
 terraform init
 terraform apply -auto-approve
+chown -R ec2-user:ec2-user /home/ec2-user/roboshop-dev-infra
