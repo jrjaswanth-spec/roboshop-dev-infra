@@ -1,19 +1,20 @@
-data "aws_ami" "openvpn" {
-    owners           = ["679593333241"]
-    most_recent      = true
-    
-    filter {
-        name   = "name"
-        values = ["OpenVPN Access Server Community Image-8fbe3379-*"]
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "6.16.0"
     }
+  }
 
-    filter {
-        name   = "root-device-type"
-        values = ["ebs"]
-    }
+  backend "s3" {
+    bucket = "trfm-remote-dev-state86s"
+    key    = "roboshop-dev-vpn"
+    region = "us-east-1"
+    use_lockfile = true
+    encrypt = true
+  }
+}
 
-    filter {
-        name   = "virtualization-type"
-        values = ["hvm"]
-    }
+provider "aws" {
+  region = "us-east-1"
 }
