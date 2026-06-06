@@ -2,13 +2,10 @@
 component=$1
 env=$2
 
-# Expand disk and filesystem
 
-growpart /dev/nvme0n1 4
-pvresize /dev/nvme0n1p4
-lvextend -l +50%FREE /dev/RootVG/homeVol
-xfs_growfs /home
-dnf install ansible cloud-utils-growpart -y
+
+
+dnf install ansible -y
 # ansible-pull -U https://github.com/jrjaswanth-spec/ansible-roboshop-roles-tf.git -e component=$component main.yaml
 
 REPO_URL=https://github.com/jrjaswanth-spec/ansible-roboshop-roles-tf.git
